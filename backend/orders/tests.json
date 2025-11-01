@@ -1,0 +1,30 @@
+{
+  "tests": [
+    {
+      "name": "Get all orders returns array",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200
+    },
+    {
+      "name": "Create new order",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "customer_name": "Test User",
+        "customer_email": "test@example.com",
+        "customer_phone": "+7 900 123-45-67",
+        "items": [
+          {
+            "id": 1,
+            "name": "Яндекс ОФД",
+            "price": 3000,
+            "quantity": 1
+          }
+        ],
+        "total_amount": 3000
+      },
+      "expectedStatus": 201
+    }
+  ]
+}
