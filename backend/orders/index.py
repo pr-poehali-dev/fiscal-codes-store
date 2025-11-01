@@ -59,10 +59,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         conn = psycopg2.connect(database_url)
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         
-        cursor.execute(
-            "INSERT INTO orders (customer_name, customer_email, customer_phone, items, total_amount, status) VALUES (%s, %s, %s, %s, %s, %s) RETURNING *",
-            (customer_name, customer_email, customer_phone, json.dumps(items), total_amount, 'pending')
-        )
+        query = f"INSERT INTO orders (customer_name, customer_email, customer_phone, items, total_amount, status) VALUES ('{customer_name}', '{customer_email}', '{customer_phone}', '{json.dumps(items)}'::jsonb, {total_amount}, 'pending') RETURNING *"
+        cursor.execute(query)
         
         new_order = cursor.fetchone()
         conn.commit()
